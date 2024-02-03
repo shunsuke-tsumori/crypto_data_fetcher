@@ -74,7 +74,7 @@ class GmoFetcher:
 
             if df is not None:
                 if interval_sec is not None:
-                    df['timestamp'] = df['timestamp'].dt.floor('{}S'.format(interval_sec))
+                    df['timestamp'] = df['timestamp'].dt.floor('{}s'.format(interval_sec))
                     df = pd.concat([
                         df.groupby('timestamp')['price'].nth(0).rename('op'),
                         df.groupby('timestamp')['price'].max().rename('hi'),
