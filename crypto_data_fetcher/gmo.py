@@ -97,19 +97,25 @@ class GmoFetcher:
     def _find_start_year_month(self, market):
         today = datetime.datetime.now().date()
 
+        start_year = None
         for year in range(2018, today.year + 1):
             url = 'https://api.coin.z.com/data/trades/{}/{}/'.format(market, year)
             self.logger.debug(url)
             if self._url_exists(url):
                 start_year = year
                 break
+        if start_year is None:
+            raise Exception("start_yearがNone")
 
+        start_month = None
         for month in range(1, 13):
             url = 'https://api.coin.z.com/data/trades/{}/{}/{:02}/'.format(market, start_year, month)
             self.logger.debug(url)
             if self._url_exists(url):
                 start_month = month
                 break
+        if start_month is None:
+            raise Exception("start_monthがNone")
 
         return start_year, start_month
 
